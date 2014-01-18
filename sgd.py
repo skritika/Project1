@@ -29,8 +29,8 @@ def train(train_path, num_features, num_epochs, val):
 	X_train = append_ones(X_train)
 
 	#grid search on lambda and mu 
-	for lamda in map(np.exp,np.arange(-6,0,.2)):
-		for mu in map(np.exp,np.arange(-6,0,.2)):
+	for lamda in map(np.exp,np.arange(-6,0,.5)):
+		for mu in map(np.exp,np.arange(-6,0,.5)):
 			iterations = 0
 			beta = np.zeros(num_features+1, dtype=float)
 			while (iterations < num_epochs):
