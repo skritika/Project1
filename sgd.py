@@ -4,7 +4,8 @@ Function parameters:
 	train_path - location of the training set		
 	num_features - try to remove this
 	num_epochs - usually 5
-	val - fraction of the training to be used for validation 
+	val - fraction of the training data to be used for validation
+	method - update method - sgd or bfgs
 '''
 import numpy as np
 import functools
@@ -61,7 +62,7 @@ def train(train_path, num_features, num_epochs, val, method):
 				Y_pred = predict(X_test, beta)
 				print lamda, mu, error(Y_test, Y_pred) 
 	elif(method=='bfgs'):
-		for mu in map(np.exp,np.arange(-6,0,.5)):
+		for mu in map(np.exp,np.arange(-8,0,.1)):
 			beta = np.zeros(num_features+1, dtype=float)
 		        f = functools.partial(f2, mu, X_train, Y_train)
             		grad = functools.partial(grad2, mu, X_train, Y_train)
