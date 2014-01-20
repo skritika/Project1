@@ -50,3 +50,18 @@ def predict(X,w):
 
 def sigmoid(x):
   return 1 / (1 + np.exp(-x))
+
+def f2(mu, X, y, w):
+    ret = np.dot(y, np.log(sigmoid(np.dot(X,w)))) + np.dot(1-y, np.log(1- sigmoid(np.dot(X,w))))
+    w[0]=0
+    ret = ret - mu* np.multiply(w,w)
+    return -ret
+
+def grad2(mu, X, y, w):
+    ret =  np.dot((y - sigmoid(np.dot(X,w))), X)
+    w[0]=0
+    ret = ret - 2*mu*w
+    return -ret
+
+def lcl(X,y,w):
+    return np.dot(y, np.log(sigmoid(np.dot(X,w)))) + np.dot(1-y, np.log(1- sigmoid(np.dot(X,w))))
