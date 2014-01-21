@@ -31,7 +31,10 @@ def scale_transform(X, avg, sigma):
 
 def append_ones(X):
     return np.append(np.ones((X.shape[0],1)), X, axis=1)
-     
+
+def append_squares(X):
+    return np.append(X, np.square(X), axis=1)
+
 def error(Y1, Y2):
     err = 0.0;
     for i in range(0,Y1.shape[0]):
@@ -41,7 +44,6 @@ def error(Y1, Y2):
 
 def predict(X,w):
     y = np.empty((X.shape[0],1))
-    X = append_ones(X)
     y = sigmoid(np.dot(X,w))
     y[y>0.5]=1
     y[y<0.5] =0
