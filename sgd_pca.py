@@ -18,7 +18,7 @@ def train(train_path, num_features, num_epochs, val, method, plot):
     #loading data
     (X, Y) = load_data(train_path, num_features)
     (X, Y) = shuffle(X,Y)
-    num_components = 1600
+    num_components = 420
     
     #feature scaling
     num_samples = X.shape[0]
@@ -32,14 +32,13 @@ def train(train_path, num_features, num_epochs, val, method, plot):
     (X_train, Y_train) = shuffle(X_train, Y_train)
     
     #extra append
-    X_train = append_squares(X_train)
-    X_test = append_squares(X_test)
+    #X_train = append_squares(X_train)
+    #X_test = append_squares(X_test)
 
     
-    #pca = PCA(n_components=800)
-    #X_train = pca.fit_transform(X_train)
-    #X_test = pca.transform(X_test)
-    #print "after pca", X_train.shape
+    pca = PCA(n_components=420)
+    X_train = pca.fit_transform(X_train)
+    X_test = pca.transform(X_test)
 
     
     #append ones
@@ -58,8 +57,8 @@ def train(train_path, num_features, num_epochs, val, method, plot):
     #grid search on lambda and mu
     beta = np.zeros(num_components+1, dtype=float)
     if(method=='sgd'):
-        for lamda in [0.0025]:
-            for mu in [0.05]:
+        for lamda in lamda_range:
+            for mu in mu_range:
                 iterations = 0
                 beta = np.zeros(num_components+1, dtype=float)
                 while (iterations < num_epochs):
@@ -70,7 +69,7 @@ def train(train_path, num_features, num_epochs, val, method, plot):
                         #if(((i*4)%tset_size)==0): lcl_points.append(lcl(X_train,Y_train,beta))
                 Y_pred = predict(X_test, beta)
                 print lamda, mu, error(Y_test, Y_pred)
-		test ('1571/test', 800, avg, sigma, beta)
+		#test ('1571/test', 800, avg, sigma, beta)
             if(plot == 'true'):
                 plt.figure()
                 plt.plot([i/4.0 for i in range(len(lcl_points))], lcl_points)
